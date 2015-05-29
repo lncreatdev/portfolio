@@ -1,4 +1,12 @@
 {
+  "name": "lncd",
+  "version": "0.0.2",
+  "main": "index.js",
+  "description": "Personal Portfolio",
+  "private": true,
+  "scripts": {
+    "start": "node web.js"
+  },
   "dependencies": {
     "express": "^4.9.8",
     "nodemailer": "0.5.9",
@@ -8,8 +16,5 @@
   "engines": {
     "node": ">=0.10.0",
     "npm": "2.x"
-  },
-  "name": "lncd",
-  "private": true,
-  "version": "0.0.2"
+  }
 }
