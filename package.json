@@ -8,15 +8,6 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "h5bp-configs": {
-    "directories": {
-      "archive": "archive",
-      "dist": "dist",
-      "src": "src",
-      "routes": "routes",
-      "test": "test"
-    }
-  },
   "homepage": "http://www.lloydntim.com/",
   "name": "lncd",
   "private": true,
