@@ -130,14 +130,14 @@ h1 {
   margin: 0.67em 0;
 }
 /**
- * Address styling sdhsjdhf sdhj not present in IE 8/9.
+ * Address styling not present in IE 8/9.
  */
 mark {
   background: #ff0;
-  color: #000000;
+  color: #000;
 }
 /**
- * Address inconsistent ands variable font size in all browsers.
+ * Address inconsistent and variable font size in all browsers.
  */
 small {
   font-size: 80%;
