@@ -8,11 +8,7 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "homepage": "http://www.lloydntim.com/",
   "name": "lncd",
   "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "version": "0.0.2"
 }
