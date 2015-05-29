@@ -1,0 +1,275 @@
+/**
+ * ----------------------------------------------------------------------------------------
+ * Module Styles
+ * ----------------------------------------------------------------------------------------
+ */
+
+/* Header */
+#main-header {
+
+    background-color: #F8F9FA;
+
+    border-bottom: 1px solid #D1D8DC;
+
+    box-shadow: 0 1px 0 #F3F5F6;
+
+    #social-top {
+        margin-top: .75em;
+    }
+}
+
+/* Footer */
+#main-footer {
+    padding: .7em 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+/* Begin: Main Navigation */
+.main-nav {
+    background: @black;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    .opacity(0);
+    position: fixed;
+    .transition(all 1s ease-in-out);
+    visibility: hidden;
+    z-index: 3;
+
+
+    &.expanded {
+        visibility: visible;
+        .opacity(.9);
+    }
+
+    .main-nav-links {
+        height: 50%;
+        padding-left: 0;
+        .vertical-align();
+
+        li {
+            > a {
+                color: @white;
+                font-family: @lato;
+                .font-size(2.4);
+
+                &.selected {
+                    border-bottom: 2px solid @main-red;
+                }
+            }
+        }
+    }
+
+    @media @tablet {
+        border-top: 1px @white solid;
+        bottom: 0;
+        height: 50px;
+        .opacity(.9);
+        top: auto;
+        visibility: visible;
+
+        &.fixed-top {
+            .opacity(1);
+            border-top: none;
+            top: 0;
+        }
+
+        .main-nav-links  {
+            display: inline;
+            top: 35%;
+
+            > li {
+                display: inline-block;
+                list-style-type: none;
+                margin: 0 45px;
+
+                > a {
+                    .font-size(1.5);
+                    font-weight: @light;
+                    letter-spacing: 1.5px;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+}
+
+.icon-menu {
+    position: fixed;
+    z-index: 3;
+    &.expanded:before {
+        content: "\ea0f";
+        .font-size(2.5);
+        right: 25px;
+        top: 25px;
+    }
+}
+
+
+/* End: Main Navigation */
+
+
+
+
+
+
+/* Begin: Social Media */
+.social-media {
+
+    @media @tablet {
+        display: inline-block;
+        margin: 0 auto;
+    }
+
+    a {
+        color: @grey;
+        display: block;
+        .font-size(4.6);
+        .grayscale(1);
+        margin: 0 4px;
+        text-decoration: none;
+        .transition(all .26s linear);
+
+        &:hover {
+            .grayscale(0);
+        }
+
+        &.icon-facebook {
+            color: @facebook-color;
+        }
+        /* TODO: Get more suitable icon to replace temporary fix */
+        &.icon-github {
+            .font-size(4.2);
+            margin-left: 7px;
+            line-height: 1.2;
+
+            &:hover {
+                color: @black;
+            }
+        }
+
+        &.icon-googleplus {
+            color: @googleplus-color;
+        }
+
+        &.icon-linkedin {
+            color: @linkedin-color;
+        }
+
+        &.icon-twitter {
+            color: @twitter-color;
+        }
+    }
+
+    @media @handheld {
+        a {
+            .font-size(5.5);
+            margin: 0 7px;
+
+            &.icon-github {
+                .font-size(5);
+                margin-left: 10px;
+            }
+        }
+    }
+
+    @media @tablet {
+        a {
+            .font-size(6);
+            margin: 0 14px;
+
+            &.icon-github {
+                .font-size(5.3);
+                margin-left: 13px;
+            }
+        }
+    }
+}
+
+/* End: Social Media */
+
+/* Begin: Contact Info */
+.contact-info {
+    margin-left: 1.5em;
+
+    p {
+        .font-size(1.8);
+        margin: 0;
+    }
+}
+/* End: Contact Info */
+
+/* Begin - Custom Typography */
+.lead-text,
+blockquote {
+    .font-size(1.8);
+    font-weight: @normal;
+}
+/* End: Custom Typography */
+
+/* Begin: Photo Section */
+.photo-section {
+    min-height: 250px;
+
+    @media @desktop {
+        height: 420px;
+    }
+}
+/* End: Photo Section */
+
+/* Buttons */
+.button {
+    background: @charcoal;
+    border: @charcoal solid 1px;
+    color: @white;
+    display: inline-block;
+    font-family: @rambla;
+    .font-size(1.8);
+    letter-spacing: 2px;
+    padding: .6em 1.5em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+/* Forms */
+.custom-form {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        border: 1px solid;
+        padding: .75em;
+        outline: 1px;
+    }
+}
+
+.overlay {
+    position: absolute;
+    .size(100%, 100%);
+    top: 0;
+    width: 100%;
+}
+
+.content-wrapper {
+    padding: 35px 25px;
+}
+
+.photo-bg {
+    .background-size(cover);
+    height: 250px;
+
+    @media @tablet {
+        height: 375px;
+    }
+
+    @media @desktop {
+        height: 520px;
+    }
+}
+
+.scrolling-enabled {
+    position: relative;
+    width: 100%;
+}
