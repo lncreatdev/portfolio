@@ -1,0 +1,96 @@
+/**
+ * ----------------------------------------------------------------------------------------
+ * Pie Chart Styles
+ * ----------------------------------------------------------------------------------------
+ */
+
+#pie-chart {
+    float: left;
+    width: 100%;
+
+    h3 {
+        .font-size(2.2);
+        font-style: italic;
+        font-family: @lato;
+        position: relative;
+        font-weight: @bold;
+        text-transform: capitalize;
+        top: 2rem;
+    }
+}
+
+#pie-chart-canvas-wrapper {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+
+    @media @mobile {
+        width: 100%;
+    }
+}
+
+#pie-chart-canvas {
+    float: left;
+    width: 260px;
+
+    @media @mobile {
+        margin: 0 auto 20px;
+        padding: 0;
+        width: 300px;
+    }
+
+    @media @tablet {
+        width: 260px;
+        padding-right: 15px;
+    }
+}
+
+#pie-chart-legend-wrapper {
+    height: auto;
+    float: left;
+    bottom: 30px;
+    position: relative;
+
+    @media @mobile {
+        margin: 0 0 10px 20px;
+    }
+
+    @media @tablet {
+        bottom: 0;
+
+        > h3 {
+            margin: 0 0 10px;
+            top: 0;
+        }
+    }
+}
+
+#pie-chart-legend {
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    > ul li {
+        .font-size(1.8);
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.pie-chart-legend-bullet {
+    border: 2px solid black;
+    color: @black;
+    display: inline-block;
+    height: 15px;
+    margin: 0 7px 0;
+    width: 15px;
+}
+
+.pie-chart-legend-desc {
+    .font-size(1.6);
+
+    @media @tablet {
+        .font-size(1.4);
+    }
+}
