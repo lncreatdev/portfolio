@@ -6,7 +6,8 @@
     "serve-static": "1.6.3"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.10.0",
+    "npm": "2.x"
   },
   "name": "lncd",
   "private": true,
