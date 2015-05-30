@@ -4,7 +4,6 @@
     "nodemailer": "0.5.9",
     "body-parser": "1.9.0",
     "serve-static": "1.6.3",
-    "nodemailer-smtp-transport": "1.0.3",
     "xoauth2": "1.0.0"
 
   },
