@@ -5,27 +5,16 @@ var static = require('serve-static');
 var bodyParser = require( 'body-parser' );
 
 var nodemailer = require('nodemailer');
-var generator = require('xoauth2').createXOAuth2Generator({
-    user: 'kwame.23@gmail.com',
-    clientId: '830781104220.apps.googleusercontent.com',
-    clientSecret: 'qf6Yuk8-qkSAUitbEmd3eOTO',
-    refreshToken: '1/uqlL1jLLr6DwJz5c88SFgamM5i4K_KjHBPlyab_mtNk',
-    accessToken: 'gwHpAmPZbyfwWgd6mXsjZm7wi8b7U3i1oKDxp'
-});
+var mg = require('nodemailer-mailgun-transport');
 
-// listen for token updates
-// you probably want to store these to a db
-generator.on('token', function(token){
-    console.log('New token for %s: %s', token.user, token.accessToken);
-});
-
-// reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport(({
-    service: 'gmail',
+var auth = {
     auth: {
-        xoauth2: generator
+        api_key: 'key-8936eca331f064d3f56edb74e900c0ea',
+        domain: 'sandbox06eedd3a1f594d51890db3d62aa368cc.mailgun.org'
     }
-}));
+};
+
+var transporter = nodemailer.createTransport(mg(auth));
 
 // create application/json parser
 //var jsonParser = bodyParser.json();
