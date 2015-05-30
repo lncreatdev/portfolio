@@ -12,18 +12,11 @@ var generator = require('xoauth2').createXOAuth2Generator({
     refreshToken: '1/uqlL1jLLr6DwJz5c88SFgamM5i4K_KjHBPlyab_mtNk'
 });
 
-// listen for token updates
-// you probably want to store these to a db
-generator.on('token', function(token){
-    console.log('New token for %s: %s', token.user, token.accessToken);
-});
-
 // reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport(({
-    service: 'Gmail',
+    service: 'gmail',
     auth: {
-        user: 'kwame.23@gmail.com',
-        pass: 'theego'
+        xoauth2: generator
     }
 }));
 
@@ -39,17 +32,16 @@ var routes = require('./routes');
 // set our port
 var port = process.env.PORT || 8002;
 
-
+// listen for token updates
+// you probably want to store these to a db
+generator.on('token', function(token){
+    console.log('New token for %s: %s', token.user, token.accessToken);
+});
 
 app.use(static(path.join(__dirname, 'dist')));
 
 // Routes
 app.get('/', routes.index);
-
-app.get('/admin', function(req, res) {
-    console.log('ad min');
-    res.sendStatus(200);
-});
 
 app.post('/sendquestion', urlencodedParser, routes.sendquestion(transporter));
 
