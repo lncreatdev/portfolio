@@ -20,9 +20,10 @@ generator.on('token', function(token){
 
 // reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport(({
-    service: 'gmail',
+    service: 'Gmail',
     auth: {
-        XOAuth2: generator
+        user: 'kwame.23@gmail.com',
+        pass: 'thego'
     }
 }));
 
