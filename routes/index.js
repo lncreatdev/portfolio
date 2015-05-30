@@ -7,7 +7,6 @@ exports.sendquestion = function (transporter) {
         if (!req.body) {
             return res.sendStatus(400);
         }
-
         var mailOptions = {
             from: req.body.name,
             to: 'i_am_lloyd@hotmail.com',
@@ -17,7 +16,7 @@ exports.sendquestion = function (transporter) {
                    '<p><strong>Name</strong>', req.body.name,'</p>',
                    '<p><strong>Email</strong>', req.body.email,'</p>',
                    '<p><strong>Phone</strong>', req.body.phone,'</p>',
-                   '<p>, req.body.message, </p>'].join()
+                   '<p>', req.body.message, '</p>'].join(' ')
             };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -25,6 +24,7 @@ exports.sendquestion = function (transporter) {
                 return console.log(error);
             }
             console.log('Message sent: ' + info.response);
+            res.sendStatus(200);
         });
     };
 };
