@@ -2,6 +2,7 @@ archive
 .idea
 test
 src
+node_modules
 dist/js/vendor/.DS_Store
 dist/.gitignore
 dist/img/.gitignore
