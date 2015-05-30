@@ -366,7 +366,7 @@ lncd.modules.ContactForm = (function ($, window) {
                 message: userMessage
             },
             jqxhr = $.ajax({
-            url: '/admin',
+            url: '/sendquestion',
             type: 'POST',
             data:  JSON.stringify(userContactDetails),
             dataType: 'json'
