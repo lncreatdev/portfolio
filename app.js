@@ -5,19 +5,26 @@ var static = require('serve-static');
 var bodyParser = require( 'body-parser' );
 
 var nodemailer = require('nodemailer');
+var generator = require('xoauth2').createXOAuth2Generator({
+    user: 'kwame.23@gmail.com',
+    clientId: '830781104220.apps.googleusercontent.com',
+    clientSecret: 'qf6Yuk8-qkSAUitbEmd3eOTO',
+    refreshToken: '1/uqlL1jLLr6DwJz5c88SFgamM5i4K_KjHBPlyab_mtNk'
+});
+
+// listen for token updates
+// you probably want to store these to a db
+generator.on('token', function(token){
+    console.log('New token for %s: %s', token.user, token.accessToken);
+});
 
 // reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport('SMTP', {
-    service: 'Gmail',
+var transporter = nodemailer.createTransport(({
+    service: 'gmail',
     auth: {
-        XOAuth2: {
-            user: 'kwame.23@gmail.com',
-            clientId: '830781104220.apps.googleusercontent.com',
-            clientSecret: 'qf6Yuk8-qkSAUitbEmd3eOTO',
-            refreshToken: '1/JG9oE1i7XyLwyccKtbqfda-K_OczHC0MXdbDzgRU3Zs'
-        }
+        XOAuth2: generator
     }
-});
+}));
 
 // create application/json parser
 //var jsonParser = bodyParser.json();
@@ -30,6 +37,8 @@ var routes = require('./routes');
 
 // set our port
 var port = process.env.PORT || 8002;
+
+
 
 app.use(static(path.join(__dirname, 'dist')));
 

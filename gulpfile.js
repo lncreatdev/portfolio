@@ -159,7 +159,7 @@ gulp.task('serve', function () {
     nodemon({ script: 'app.js',
           ext: 'html js',
        // , ignore: ['ignored.js']
-          tasks: ['js'] })
+          tasks: ['js', 'html', 'css'] })
         .on('restart', function () {
             console.log('restarted!')
         });
