@@ -8,8 +8,8 @@ exports.sendquestion = function (transporter) {
             return res.sendStatus(400);
         }
         var mailOptions = {
-            from: req.body.name,
-            to: 'i_am_lloyd@hotmail.com',
+            from: req.body.email,
+            to: 'kwame.23@gmail.com',
             subject: ['LNCD WEBSITE', req.body.subject].join(' '),
             text: req.body.message,
             html: ['<h1>LNCD - Customer Request </h1>',
@@ -23,7 +23,7 @@ exports.sendquestion = function (transporter) {
             if(error) {
                 return console.log(error);
             }
-            console.log('Message sent: ' + info.response);
+            console.log('Message sent: ' + info);
             res.sendStatus(200);
         });
     };
