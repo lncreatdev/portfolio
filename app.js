@@ -1,13 +1,26 @@
 var express = require('express');
+var http = require('http');
+var path = require('path');
+var static = require('serve-static');
+
+// create application/json parser
+//var jsonParser = bodyParser.json();
+
+
 var app = express();
+var routes = require('./routes');
 
-app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
+// set our port
+var port = process.env.PORT || 8002;
 
-app.get('/', function(request, response) {
-    response.send('Hello World!')
+app.use(static(path.join(__dirname, 'dist')));
+
+// Routes
+app.get('/', routes.index);
+
+app.get('/admin', function(req, res) {
+    res.sendStatus(200);
 });
 
-app.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'));
-});
+
+app.listen(port);
