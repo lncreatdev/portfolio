@@ -21,11 +21,10 @@ exports.sendquestion = function (transporter) {
 
         transporter.sendMail(mailOptions, function (error, info) {
             if(error) {
-                res.send(error);
                 return console.log(error);
             }
            // console.log('Message sent: ' + info);
-         //   res.sendStatus(200);
+            res.sendStatus(200);
             res.send(info);
         });
     };
