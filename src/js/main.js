@@ -340,12 +340,7 @@ lncd.modules.ContactForm = (function ($, window) {
         events = {
             CLICK: 'click'
         },
-        _self,
-        userName = $(selectors.USER_NAME).val(),
-        userPhone = $(selectors.USER_PHONE).val(),
-        userEail = $(selectors.USER_EMAIL).val(),
-        userSubject = $(selectors.USER_SUBJECT).val(),
-        userMessage = $(selectors.USER_MESSAGE).val();
+        _self;
 
 
     ContactForm.init = function () {
@@ -358,7 +353,12 @@ lncd.modules.ContactForm = (function ($, window) {
     ContactForm.submit = function (evt) {
         evt.preventDefault();
 
-        var userContactDetails = {
+        var userName = $(selectors.USER_NAME).val(),
+            userPhone = $(selectors.USER_PHONE).val(),
+            userEail = $(selectors.USER_EMAIL).val(),
+            userSubject = $(selectors.USER_SUBJECT).val(),
+            userMessage = $(selectors.USER_MESSAGE).val(),
+            userContactDetails = {
                 name: userName,
                 phone: userPhone,
                 email: userEail,
@@ -368,8 +368,7 @@ lncd.modules.ContactForm = (function ($, window) {
             jqxhr = $.ajax({
             url: '/sendquestion',
             type: 'POST',
-            data:  JSON.stringify(userContactDetails),
-            dataType: 'json'
+            data:  userContactDetails
         });
 
         jqxhr.done(_self.submitSuccessHandler);
@@ -377,15 +376,14 @@ lncd.modules.ContactForm = (function ($, window) {
     };
 
     ContactForm.submitSuccessHandler = function (data) {
-        alert('success ' + data);
+        alert('Message have been sent');
     };
 
     ContactForm.submitFailureHandler = function (data) {
-        alert('fail ' + data);
+        alert('Message could not be sent');
     };
 
     return ContactForm;
-
 
 }(jQuery));
 
