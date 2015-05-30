@@ -1,0 +1,15 @@
+archive
+.idea
+test
+src
+dist/js/vendor/.DS_Store
+dist/.gitignore
+dist/img/.gitignore
+.jshintrc
+.jscsrc
+.travis.yml
+.gitattributes
+.editorconfig
+
+*.md
+gulpfile.js
