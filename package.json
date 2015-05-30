@@ -3,7 +3,10 @@
     "express": "^4.9.8",
     "nodemailer": "0.5.9",
     "body-parser": "1.9.0",
-    "serve-static": "1.6.3"
+    "serve-static": "1.6.3",
+    "nodemailer-smtp-transport": "1.0.3",
+    "xoauth2": "1.0.0"
+
   },
   "engines": {
     "node": ">=0.10.0"
