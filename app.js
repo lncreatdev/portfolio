@@ -9,7 +9,14 @@ var generator = require('xoauth2').createXOAuth2Generator({
     user: 'kwame.23@gmail.com',
     clientId: '830781104220.apps.googleusercontent.com',
     clientSecret: 'qf6Yuk8-qkSAUitbEmd3eOTO',
-    refreshToken: '1/uqlL1jLLr6DwJz5c88SFgamM5i4K_KjHBPlyab_mtNk'
+    refreshToken: '1/uqlL1jLLr6DwJz5c88SFgamM5i4K_KjHBPlyab_mtNk',
+    accessToken: 'gwHpAmPZbyfwWgd6mXsjZm7wi8b7U3i1oKDxp'
+});
+
+// listen for token updates
+// you probably want to store these to a db
+generator.on('token', function(token){
+    console.log('New token for %s: %s', token.user, token.accessToken);
 });
 
 // reusable transporter object using SMTP transport
@@ -31,12 +38,6 @@ var routes = require('./routes');
 
 // set our port
 var port = process.env.PORT || 8002;
-
-// listen for token updates
-// you probably want to store these to a db
-generator.on('token', function(token){
-    console.log('New token for %s: %s', token.user, token.accessToken);
-});
 
 app.use(static(path.join(__dirname, 'dist')));
 

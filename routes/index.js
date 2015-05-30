@@ -10,9 +10,9 @@ exports.sendquestion = function (transporter) {
         var mailOptions = {
             from: req.body.name,
             to: 'i_am_lloyd@hotmail.com',
-            subject: req.body.subject,
+            subject: ['LNCD WEBSITE', req.body.subject].join(' '),
             text: req.body.message,
-            html: ['<h1>hello world!</h1>',
+            html: ['<h1>LNCD - Customer Request </h1>',
                    '<p><strong>Name</strong>', req.body.name,'</p>',
                    '<p><strong>Email</strong>', req.body.email,'</p>',
                    '<p><strong>Phone</strong>', req.body.phone,'</p>',
