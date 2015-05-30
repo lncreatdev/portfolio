@@ -376,11 +376,13 @@ lncd.modules.ContactForm = (function ($, window) {
     };
 
     ContactForm.submitSuccessHandler = function (data) {
-        alert('Message have been sent ' + data);
+        alert('Message has been sent ' +  data);
+        console.log(data);
     };
 
     ContactForm.submitFailureHandler = function (data) {
         alert('Message could not be sent ' + data);
+        console.log(data);
     };
 
     return ContactForm;
