@@ -19,11 +19,11 @@ exports.sendquestion = function (transporter) {
                    '<p>', req.body.message, '</p>'].join(' ')
             };
 
-        transporter.sendMail(mailOptions, function (error, info) {
-            if(error) {
-                return console.log(error);
+        sendgrid.send(mailOptions, function(err, json) {
+            if (err) {
+                return console.error(err);
             }
-            console.log('Message sent: ' + info);
+            console.log(json);
             res.sendStatus(200);
         });
     };
