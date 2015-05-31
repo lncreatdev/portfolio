@@ -105,7 +105,7 @@ article.theme-dark {
 
 /* Begin: Home Section */
 #home {
-    background: url(./../img/bg-photo-home.jpg) no-repeat center center fixed;
+    background: url(./../img/bg-sml-photo-home.jpg) no-repeat center center;
     .background-size(cover);
     min-height: 320px;
     .size(100%, 100vh);
@@ -199,6 +199,11 @@ article.theme-dark {
                 line-height: 1.4;
             }
         }
+    }
+
+    @media @tablet {
+        background: url(./../img/bg-photo-home.jpg) no-repeat center center fixed;
+        .background-size(cover);
     }
 }
 /* End: Home Section */
@@ -531,11 +536,21 @@ article.theme-dark {
     .background-size(cover);
 
     &.portfolio {
-        background-image: url(./../img/bg-photo-portfolio.jpg);
+        background-image: url(./../img/bg-sml-photo-portfolio.jpg);
     }
 
     &.contact {
-        background-image: url(./../img/bg-photo-contact.jpg);
+        background-image: url(./../img/bg-sml-photo-contact.jpg);
+    }
+
+    @media @handheld {
+        &.portfolio {
+            background-image: url(./../img/bg-photo-portfolio.jpg);
+        }
+
+        &.contact {
+            background-image: url(./../img/bg-photo-contact.jpg);
+        }
     }
 }
 /* End: Photo Background */

@@ -7,6 +7,7 @@ lncd.components = lncd.components || {};
 lncd.services = lncd.services || {};
 
 lncd.services.ResizeManager = (function (window) {
+    'use strict';
     var ResizeManager = {};
 
     function _matchSize (breakpoint) {
@@ -34,6 +35,7 @@ lncd.services.ResizeManager = (function (window) {
 } (window));
 
 lncd.modules.Navigation = (function ($, ResizeManager, window) {
+    'use strict';
     var Navigation = {},
         selectors = {
             HTML: 'html',
@@ -62,12 +64,6 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
 
         currentView,
         currentIndex;
-
-    function _navigate (evt) {
-        evt.preventDefault();
-        currentIndex = $(this).parent().index();
-        _scrollTo(currentIndex);
-    }
 
     function _setSlideFocusTo(index) {
         console.log('_setSlideFocusTo with index ' + index);
@@ -105,9 +101,11 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         var defaultSpeed = 1.5,
             seconds = seconds || defaultSpeed,//TODO: use config
             speed = seconds * 1000,
-            offset = offset || $mainNav.height() || 0,
+            offset = offset || 0,
             $html = $(selectors.HTML + ',' + selectors.BODY),
             $element = $slides.eq(index);
+
+        console.log('offset ' + offset);
 
         $html.animate({
             scrollTop: $element.offset().top - offset
@@ -143,25 +141,24 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
             $navButton = $(selectors.ICON_MENU);
 
         function _toggleMenu (evt) {
-            $mainNav.show();
             $mainNav.toggleClass(classes.EXPANDED);
             $navButton.toggleClass(classes.EXPANDED);
         }
 
         function _navigate (evt) {
             evt.preventDefault();
-            _toggleMenu();
             currentIndex = $(this).parent().index();
+            _toggleMenu();
             _scrollTo(currentIndex);
-
         }
 
         view.init = function () {
-            $navButton.on(events.CLICK, _toggleMenu);
             $navLinks.on(events.CLICK, _navigate);
+            $navButton.on(events.CLICK, _toggleMenu);
         };
 
         view.clear = function () {
+            $navLinks.off(events.CLICK, _navigate);
             $navButton.off(events.CLICK, _toggleMenu);
             $mainNav.removeClass(classes.EXPANDED);
         };
@@ -180,6 +177,13 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
                 FIXED_TOP: 'fixed-top'
             },
             $firstSlide = $(selectors.HOME_SLIDE);
+
+        function _navigate (evt) {
+            console.log('_navigate tbt');
+            evt.preventDefault();
+            currentIndex = $(this).parent().index();
+            _scrollTo(currentIndex, null, $mainNav.height());
+        }
 
         view.init = function () {
             $navLinks.on(events.CLICK, _navigate);
@@ -269,8 +273,6 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         return view;
     }; */
 
-    Navigation.navigate = _navigate;
-
     Navigation.scrollTo = _scrollTo;
 
     Navigation.setRoute = _setRoute;
@@ -281,7 +283,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
 
 }(jQuery, lncd.services.ResizeManager, window));
 
-lncd.modules.Scrolling = (function ($, window, Navigation) {
+lncd.services.Scrolling = (function ($, window, Navigation) {
     'use strict';
     var ScrollingService = {},
         selectors = {
@@ -400,4 +402,4 @@ lncd.app = (function (Navigation, Scrolling, ContactForm) {
 
     return app;
 
-}(lncd.modules.Navigation, lncd.modules.Scrolling, lncd.modules.ContactForm));
+}(lncd.modules.Navigation, lncd.services.Scrolling, lncd.modules.ContactForm));
