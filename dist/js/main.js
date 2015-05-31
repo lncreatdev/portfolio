@@ -68,7 +68,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         scrollOfffset;
 
     function _setSlideFocusTo(index) {
-        console.log('_setSlideFocusTo with index ' + index);
+       // console.log('_setSlideFocusTo with index ' + index);
         _selectLink(index);
         _setRoute(index);
     }
@@ -81,7 +81,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
             title = $navLinks.eq(index).text();
 
         window.history.pushState({page: page}, title, location);
-        console.log('_setRoute with index: ' + index);
+    //    console.log('_setRoute with index: ' + index);
         window.location.hash = location;
     }
 
@@ -96,7 +96,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
                 currentIndex = currentSlideIndex;
             }
         });
-        console.log(currentIndex);
+    //    console.log(currentIndex);
     }
 
     function _scrollTo(index, seconds, offset) {
@@ -106,8 +106,6 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
             offset = offset || scrollOfffset,
             $html = $(selectors.HTML + ',' + selectors.BODY),
             $element = $slides.eq(index);
-
-        console.log('offset ' + offset);
 
         $html.animate({
             scrollTop: $element.offset().top - offset
@@ -220,7 +218,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         });
         $window.on(ResizeManager.events.RESIZE, _switchView);
         $window.on(events.POP_STATE, function () {
-            console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+            //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
             _scrollTo(event.state.page-1, 0);
         });
     };
