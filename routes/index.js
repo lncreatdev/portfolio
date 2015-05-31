@@ -2,7 +2,7 @@ exports.index = function (req, res) {
     res.sendFile('/index.html', {root: __dirname});
 };
 
-exports.sendquestion = function (transporter) {
+exports.sendquestion = function (sendgrid) {
     return function (req, res) {
         if (!req.body) {
             return res.sendStatus(400);
