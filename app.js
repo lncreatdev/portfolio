@@ -9,8 +9,8 @@ var mg = require('nodemailer-mailgun-transport');
 
 var auth = {
     auth: {
-        api_key: 'key-8936eca331f064d3f56edb74e900c0ea',
-        domain: 'sandbox06eedd3a1f594d51890db3d62aa368cc.mailgun.org'
+        api_key: 'key-4fc63985a7f7b6cbe750aae4dc31cad4',
+        domain: 'app8e1774ab189a47c9b946e23c03f7a4dc.mailgun.org'
     }
 };
 
