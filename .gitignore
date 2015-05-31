@@ -3,3 +3,10 @@ node_modules
 .idea/
 .gitignore
 src
+dist/robots.txt
+dist/img/thumbs/.DS_Store
+dist/humans.txt
+dist/.editorconfig
+dist/.gitattributes
+dist/.htaccess dist/browserconfig.xml
+dist/fonts/selection.json
