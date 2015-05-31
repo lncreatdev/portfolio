@@ -63,7 +63,9 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         $slides = $(selectors.SLIDE),
 
         currentView,
-        currentIndex;
+        currentIndex,
+
+        scrollOfffset;
 
     function _setSlideFocusTo(index) {
         console.log('_setSlideFocusTo with index ' + index);
@@ -101,7 +103,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         var defaultSpeed = 1.5,
             seconds = seconds || defaultSpeed,//TODO: use config
             speed = seconds * 1000,
-            offset = offset || 0,
+            offset = offset || scrollOfffset,
             $html = $(selectors.HTML + ',' + selectors.BODY),
             $element = $slides.eq(index);
 
@@ -149,15 +151,17 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
             evt.preventDefault();
             currentIndex = $(this).parent().index();
             _toggleMenu();
-            _scrollTo(currentIndex);
+            _scrollTo(currentIndex, null, 0);
         }
 
         view.init = function () {
+            scrollOfffset = 0;
             $navLinks.on(events.CLICK, _navigate);
             $navButton.on(events.CLICK, _toggleMenu);
         };
 
         view.clear = function () {
+            scrollOfffset = null;
             $navLinks.off(events.CLICK, _navigate);
             $navButton.off(events.CLICK, _toggleMenu);
             $mainNav.removeClass(classes.EXPANDED);
@@ -179,13 +183,13 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
             $firstSlide = $(selectors.HOME_SLIDE);
 
         function _navigate (evt) {
-            console.log('_navigate tbt');
             evt.preventDefault();
             currentIndex = $(this).parent().index();
-            _scrollTo(currentIndex, null, $mainNav.height());
+            _scrollTo(currentIndex);
         }
 
         view.init = function () {
+            scrollOfffset = $mainNav.height();
             $navLinks.on(events.CLICK, _navigate);
         };
 
@@ -200,6 +204,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         };
 
         view.clear = function () {
+            scrollOfffset = null;
             $navLinks.off(events.CLICK, _navigate);
         };
 
@@ -210,7 +215,7 @@ lncd.modules.Navigation = (function ($, ResizeManager, window) {
         _switchView();
         $window.on(events.LOAD, function () {
             _initRoute();
-            _scrollTo(currentIndex, 0);
+            _scrollTo(currentIndex);
             _setSlideFocusTo(currentIndex);
         });
         $window.on(ResizeManager.events.RESIZE, _switchView);
