@@ -903,7 +903,7 @@ a {
   filter: alpha(opacity=100);
 }
 .is-hidden {
-  display: none;
+  display: none !important;
 }
 /**
  * ----------------------------------------------------------------------------------------
@@ -1006,7 +1006,7 @@ article.theme-dark .sub-title-main {
 /* End: Menu Icon */
 /* Begin: Home Section */
 #home {
-  background: url(../img/bg-photo-home.jpg) no-repeat center center fixed;
+  background: url(../img/bg-sml-photo-home.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1116,6 +1116,15 @@ article.theme-dark .sub-title-main {
     font-weight: 200;
     text-transform: capitalize;
     line-height: 1.4;
+  }
+}
+@media only screen and (min-width: 768px) {
+  #home {
+    background: url(../img/bg-photo-home.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 }
 /* End: Home Section */
@@ -1435,10 +1444,18 @@ article.theme-dark .sub-title-main {
   background-size: cover;
 }
 .photo-bg.portfolio {
-  background-image: url(../img/bg-photo-portfolio.jpg);
+  background-image: url(../img/bg-sml-photo-portfolio.jpg);
 }
 .photo-bg.contact {
-  background-image: url(../img/bg-photo-contact.jpg);
+  background-image: url(../img/bg-sml-photo-contact.jpg);
+}
+@media only screen and (min-width: 480px) {
+  .photo-bg.portfolio {
+    background-image: url(../img/bg-photo-portfolio.jpg);
+  }
+  .photo-bg.contact {
+    background-image: url(../img/bg-photo-contact.jpg);
+  }
 }
 /* End: Photo Background */
 .l-content-cell {
