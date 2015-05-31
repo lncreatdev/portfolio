@@ -3,7 +3,6 @@ var http = require('http');
 var path = require('path');
 var static = require('serve-static');
 var bodyParser = require( 'body-parser' );
-
 var sendgrid  = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD);
 
 // create application/json parser
@@ -23,7 +22,7 @@ app.use(static(path.join(__dirname, 'dist')));
 // Routes
 app.get('/', routes.index);
 
-app.post('/sendquestion', urlencodedParser, routes.sendquestion(transporter));
+app.post('/sendquestion', urlencodedParser, routes.sendquestion(sendgrid));
 
 app.on('listening',function(){
     console.log('ok, server is running');
