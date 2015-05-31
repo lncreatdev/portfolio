@@ -8,5 +8,8 @@ dist/img/thumbs/.DS_Store
 dist/humans.txt
 dist/.editorconfig
 dist/.gitattributes
-dist/.htaccess dist/browserconfig.xml
+dist/.htaccess
+dist/browserconfig.xml
 dist/fonts/selection.json
+dist/.gitignore
+dist/crossdomain.xml
