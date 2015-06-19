@@ -4,10 +4,29 @@ var path = require('path');
 var modernizr = require('gulp-modernizr');
 
 var gulp = require('gulp');
+var browserify = require('browserify');
+var buffer = require('vinyl-buffer');
+var concat = require('gulp-concat');
+var es = require('event-stream');
+var glob = require('glob');
+var gutil = require('gulp-util');
+var karma = require('karma');
+var jasmine = require('gulp-jasmine');
+var jasmineBrowser = require('gulp-jasmine-browser');
+var mocha = require('gulp-mocha');
+var assign = require('lodash.assign');
 var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
+var rename = require('gulp-rename');
 var less = require('gulp-less');
+var watch = require('gulp-watch');
 var notify = require('gulp-notify');
+var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var streamify = require('gulp-streamify');
+var transform = require('vinyl-transform');
+var uglify = require('gulp-uglify');
+var watchify = require('watchify');
 
 var plugins = require('gulp-load-plugins')(); // Load all gulp plugins
                                               // automatically and attach
@@ -31,7 +50,7 @@ gulp.task('archive:zip', function (done) {
 
     var archiveName = path.resolve(dirs.archive, pkg.name + '_v' + pkg.version + '.zip');
     var archiver = require('archiver')('zip');
-    var files = require('glob').sync('**/*.*', {
+    var files = glob.sync('**/*.*', {
         'cwd': dirs.dist,
         'dot': true // include hidden files
     });
@@ -142,6 +161,36 @@ gulp.task('lint:js', function () {
       .pipe(plugins.jshint.reporter('fail'));
 });
 
+var testFiles = glob.sync(dirs.src + '/js/**/*.js');
+var customOpts = {
+    entries: testFiles,
+    debug: true
+};
+var opts = assign({}, watchify.args, customOpts);
+var b = watchify(browserify(opts));
+
+gulp.task('browserify', bundle); // so you can run `gulp js` to build the file
+b.on('update', bundle); // on any dep update, runs the bundler
+b.on('log', gutil.log); // output build logs to terminal
+
+function bundle() {
+    return b.bundle()
+        // log errors if they happen
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+        .pipe(source('bundle.js'))
+        // optional, remove if you don't need to buffer file contents
+        .pipe(buffer())
+        //.pipe(streamify(uglify({ mangle: false })))
+        .pipe(rename({suffix: '.min' }))
+        // optional, remove if you dont want sourcemaps
+        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+        // Add transformation tasks to the pipeline here.
+        .pipe(sourcemaps.write('./')) // writes .map file
+        .pipe(gulp.dest(dirs.dist + '/js'))
+        .pipe(livereload())
+        .pipe(notify());
+}
+
 
 // ---------------------------------------------------------------------
 // | Main tasks                                                        |
@@ -167,16 +216,9 @@ gulp.task('serve', function () {
 
 gulp.task('build', function (done) {
     runSequence(
-        ['clean'],
-        'copy',
+        ['clean'/*, 'lint:js'*/],
+        'copy', 'browserify',
     done);
-});
-
-gulp.task('js', function () {
-    return gulp.src(dirs.src + '/js/*.js')
-        .pipe(gulp.dest(dirs.dist + '/js'))
-        .pipe(livereload())
-        .pipe(notify());
 });
 
 gulp.task('less', function() {
@@ -193,6 +235,38 @@ gulp.task('modernizr', function() {
         .pipe(gulp.dest('build/'));
 });
 
+gulp.task('test:karma', function () {
+    return karma.server.start({
+        configFile: __dirname+'/karma.conf.js',
+        singleRun: true
+    });
+});
+
+/*gulp.task('test:jasmine', function () {
+    return gulp.src([dirs.test + '/!*.js',
+        '!' + dirs.test + '/file_content.js',
+        '!' + dirs.test + '/file_existence.js'])
+        .pipe(jasmine());
+});
+
+gulp.task('test:mocha', function () {
+    return gulp.src(['!' + dirs.test + '/!*.js',
+        dirs.test + '/file_content.js',
+        dirs.test + '/file_existence.js'])
+        // gulp-mocha needs filepaths so you can't have any plugins before it
+        .pipe(mocha({reporter: 'nyan'}));
+});
+
+gulp.task('jasmine', function() {
+    var filesForTest = [dirs.test + '/!*.js',
+        '!' + dirs.test + '/file_content.js',
+        '!' + dirs.test + '/file_existence.js'];
+    return gulp.src(filesForTest)
+        .pipe(watch(filesForTest))
+        .pipe(jasmineBrowser.specRunner())
+        .pipe(jasmineBrowser.server({port: 8888}));
+});*/
+
 gulp.task('html', function () {
     return gulp.src(dirs.src + '/*.html')
         .pipe(plugins.replace(/{{JQUERY_VERSION}}/g, pkg.devDependencies.jquery))
@@ -204,8 +278,8 @@ gulp.task('html', function () {
 gulp.task('watch', function () {
     livereload.listen();
     gulp.watch([dirs.src + '/*.html'], ['html']);
-    gulp.watch([dirs.src + '/js/*.js'], ['js']);
+   // gulp.watch([dirs.src + '/js/**/*.js'], ['js']);
     gulp.watch([dirs.src + '/less/*.less'], ['less']);
 });
 
-gulp.task('default', ['build', 'serve', 'watch']);
+gulp.task('default', ['test:karma', 'build', 'serve', 'watch']);
