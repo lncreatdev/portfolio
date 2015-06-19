@@ -38,6 +38,14 @@ var runSequence = require('run-sequence');    // Temporary solution until gulp 4
 var pkg = require('./package.json');
 var dirs = pkg['h5bp-configs'].directories;
 
+var testFiles = glob.sync(dirs.src + '/js/**/*.js');
+var customOpts = {
+    entries: testFiles,
+    debug: true
+};
+var opts = assign({}, watchify.args, customOpts);
+var b = watchify(browserify(opts));
+
 // ---------------------------------------------------------------------
 // | Helper tasks                                                      |
 // ---------------------------------------------------------------------
@@ -135,6 +143,7 @@ gulp.task('copy:misc', function () {
         // (other tasks will handle the copying of these files)
         '!' + dirs.src + '/index.html',
         '!' + dirs.src + '/less{,/**}',
+        '!' + dirs.src + '/js/**/*!(bundle.min.js | *.map | plugins.js)',
         '!' + dirs.src + '/doc{,/**}'
 
     ], {
@@ -161,30 +170,19 @@ gulp.task('lint:js', function () {
       .pipe(plugins.jshint.reporter('fail'));
 });
 
-var testFiles = glob.sync(dirs.src + '/js/**/*.js');
-var customOpts = {
-    entries: testFiles,
-    debug: true
-};
-var opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts));
-
 gulp.task('browserify', bundle); // so you can run `gulp js` to build the file
 b.on('update', bundle); // on any dep update, runs the bundler
 b.on('log', gutil.log); // output build logs to terminal
 
 function bundle() {
     return b.bundle()
-        // log errors if they happen
-        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-        .pipe(source('bundle.js'))
-        // optional, remove if you don't need to buffer file contents
+        .on('error', gutil.log.bind(gutil, 'Browserify Error')) // log errors if they happen
+        .pipe(source('bundle.js')) // optional, remove if you don't need to buffer file contents
         .pipe(buffer())
-        //.pipe(streamify(uglify({ mangle: false })))
+        .pipe(sourcemaps.init({loadMaps: true})) // loads map from Browserify file
+        // Transformation tasks to the pipeline start here.
+        .pipe(streamify(uglify({ mangle: false })))
         .pipe(rename({suffix: '.min' }))
-        // optional, remove if you dont want sourcemaps
-        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-        // Add transformation tasks to the pipeline here.
         .pipe(sourcemaps.write('./')) // writes .map file
         .pipe(gulp.dest(dirs.dist + '/js'))
         .pipe(livereload())
