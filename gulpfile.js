@@ -206,7 +206,7 @@ gulp.task('serve', function () {
     nodemon({ script: 'app.js',
           ext: 'html js',
        // , ignore: ['ignored.js']
-          tasks: ['js', 'html', 'less'] })
+          tasks: ['html', 'less'] })
         .on('restart', function () {
             console.log('restarted!')
         });
@@ -280,4 +280,4 @@ gulp.task('watch', function () {
     gulp.watch([dirs.src + '/less/*.less'], ['less']);
 });
 
-gulp.task('default', ['test:karma', 'build', 'serve', 'watch']);
+gulp.task('default', ['build', 'serve', 'watch']);
