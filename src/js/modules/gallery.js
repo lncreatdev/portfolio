@@ -31,10 +31,16 @@ module.exports = (function () {
 
     Gallery.toggleThumbInfoOverlay = function (evt) {
         evt.preventDefault();
-
         var $target = $(this),
+            $currentOverlay = $galleryThumbnailOverlay.eq(index);
             index = $target.closest(selectors.GALLERY_THUMB).index();
-        $galleryThumbnailOverlay.eq(index).toggleClass(classes.VISIBLE);
+
+        if($currentOverlay.hasClass(!classes.VISIBLE)) {
+            classes.VISIBLE.addClass(classes.VISIBLE);
+            return;
+        }
+
+        $currentOverlay.toggleClass(classes.VISIBLE);
     };
 
     return Gallery;
