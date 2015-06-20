@@ -1,3 +1,7 @@
 archive
 node_modules
 .idea/
+dist/.DS_Store
+src/.DS_Store
+src/js/main-bu.js
+
